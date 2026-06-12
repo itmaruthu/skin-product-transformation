@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cinematic Skincare Experience. Discover luxurious, botanically-infused formulations tailored to your unique skin type.">
+  <title>AURA — Cinematic Skincare Ritual</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- GLOBAL CURTAIN WIPE OVERLAY -->
+  <div class="curtain-wipe" id="curtain-wipe">
+  </div>
+
+  <!-- FLOATING HEADER / NAVIGATION -->
+  <header class="global-header">
+    <a href="#" class="brand-logo" id="header-logo">Aura<span>.</span></a>
+    
+    <nav class="nav-links">
+      <a href="#hero" class="nav-link active" data-index="0">Ritual</a>
+      <a href="#products" class="nav-link" data-index="1">Formulations</a>
+      <a href="#ingredients" class="nav-link" data-index="2">Botanicals</a>
+      <a href="#testimonials" class="nav-link" data-index="3">Echoes</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn-secondary" id="quiz-toggle" style="color: var(--color-white); border-color: rgba(255, 255, 255, 0.3); padding: 8px 16px; font-size: 0.65rem;">
+        Skin Diagnostic
+      </button>
+      
+      <!-- Account Dashboard Button -->
+      <button class="header-btn" id="account-toggle" aria-label="User Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span id="account-status-dot" style="position: absolute; bottom: 0; right: 0; width: 6px; height: 6px; background-color: var(--color-gold); border-radius: 50%; display: none;"></span>
+      </button>
+
+      <!-- Cart Button -->
+      <button class="header-btn" id="cart-toggle" aria-label="Shopping Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <path d="M16 10a4 4 0 0 1-8 0" />
+        </svg>
+        <span class="cart-badge" id="cart-count" style="display: none;">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN APP VIEWPORT -->
+  <main class="app-viewport">
+
+    <!-- 1. HERO SECTION -->
+    <section class="section active" id="hero-section" data-index="0">
+      <div class="bg-image-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="section-content">
+        <div class="hero-box">
+          <span class="hero-subtitle">Cultivating Timeless Radiance</span>
+          <h1 class="hero-title">The Cinematic Ritual</h1>
+          <p class="hero-desc">Experience skincare as a slow, deliberate art. Clean, bio-active botanicals aligned with your unique cellular blueprint to reveal your skin's innate luminosity.</p>
+          <div class="hero-actions">
+            <button class="btn-primary gold-btn" onclick="window.App.navigateToSection(1)">
+              Shop Formulations
+            </button>
+            <button class="btn-primary" id="quiz-toggle-hero" style="background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.25);">
+              Begin Skin Analysis
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PRODUCT SHOWCASE SECTION -->
+    <section class="section" id="products-section" data-index="1">
+      <div class="bg-image-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="section-content">
+        <div class="section-header">
+          <span class="section-subtitle">Aesthetic Apothecary</span>
+          <h2 class="section-title-white">The Essential Formulations</h2>
+        </div>
+        
+        <!-- Products Grid (Dynamically Populated) -->
+        <div class="products-slider-wrapper" id="products-list">
+          <div class="quiz-loading" style="min-height: 200px; width: 100%;">
+            <div class="loading-spinner"></div>
+            <p class="loading-text" style="color: rgba(255,255,255,0.7)">Opening formulations vault...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INGREDIENTS / BOTANICALS SECTION -->
+    <section class="section" id="ingredients-section" data-index="2">
+      <div class="bg-image-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="section-content">
+        <div class="section-header">
+          <span class="section-subtitle">Bio-Active Core</span>
+          <h2 class="section-title-white">Interactive Botanical Map</h2>
+        </div>
+
+        <div class="ingredients-layout">
+          <!-- Interactive Map -->
+          <div class="ingredients-interactive-map">
+            <img src="images/ingredients-bg.jpg" alt="Botanical Ingredients" class="interactive-bg-img">
+            
+            <!-- Hotspots -->
+            <button class="ingredient-hotspot" id="hotspot-gold" data-id="gold" aria-label="24k Gold Flakes">
+              <span class="hotspot-ring"></span>
+            </button>
+            <button class="ingredient-hotspot" id="hotspot-squalane" data-id="squalane" aria-label="Squalane">
+              <span class="hotspot-ring"></span>
+            </button>
+            <button class="ingredient-hotspot" id="hotspot-greentea" data-id="greentea" aria-label="Green Tea">
+              <span class="hotspot-ring"></span>
+            </button>
+            <button class="ingredient-hotspot" id="hotspot-ceramide" data-id="ceramides" aria-label="Ceramides">
+              <span class="hotspot-ring"></span>
+            </button>
+          </div>
+
+          <!-- Detail Panel -->
+          <div class="ingredients-details-panel">
+            <div class="ing-details-content" id="ingredient-details-content">
+              <!-- Dynamically populated via JS, showing a default initially -->
+              <span class="ing-details-subtitle">Selected Ingredient</span>
+              <h3 class="ing-details-title">Pure Bio-Active Compounds</h3>
+              <p class="ing-details-desc">Hover over or tap the glowing nodes on the botanical map to uncover the science, source, and cellular benefits behind our active skincare components.</p>
+              <div class="ing-details-benefits">
+                <div class="benefit-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>100% Traceable Plant Sources</span>
+                </div>
+                <div class="benefit-item">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span>Cold-Pressed Extraction Methods</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. TESTIMONIALS SECTION -->
+    <section class="section" id="testimonials-section" data-index="3">
+      <div class="bg-image-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-overlay"></div>
+      </div>
+      <div class="section-content">
+        <div class="section-header">
+          <span class="section-subtitle">Real Echoes</span>
+          <h2 class="section-title-white">The Aura Community</h2>
+        </div>
+
+        <div class="testimonials-layout">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars" aria-label="5 stars">
+                &#9733; &#9733; &#9733; &#9733; &#9733;
+              </div>
+              <p class="testimonial-quote">"The Luminous Nectar is a revelation. My skin holds moisture like never before, giving a natural dew that lasts through twelve-hour days. It has simplified my entire morning."</p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">MC</div>
+              <div>
+                <h4 class="author-name">Madeline Carlisle</h4>
+                <p class="author-meta">Verified Ritualist — Dry/Sensitive Skin</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 (Secondary on large screen, hidden on mobile) -->
+          <div class="testimonial-card secondary">
+            <div>
+              <div class="testimonial-stars" aria-label="5 stars">
+                &#9733; &#9733; &#9733; &#9733; &#9733;
+              </div>
+              <p class="testimonial-quote">"I was skeptical about facial oils, but the Auric Youth Elixir is lightweight, absorbing instantly without greasiness. My fine lines around the eyes have softened visibly in weeks."</p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">HR</div>
+              <div>
+                <h4 class="author-name">Harrison Vance</h4>
+                <p class="author-meta">Verified Ritualist — Combination Skin</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BOTTOM CONTROLS & AUTO-PLAY SLIDESHOW PROGRESS BAR -->
+  <footer class="bottom-controls-bar">
+    <div class="slideshow-progress-container">
+      <button class="play-pause-btn" id="play-pause-toggle" aria-label="Pause Auto Advance">
+        <!-- Pause Icon -->
+        <svg id="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="4" width="4" height="16" />
+          <rect x="14" y="4" width="4" height="16" />
+        </svg>
+        <!-- Play Icon (hidden by default) -->
+        <svg id="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display: none;">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+      </button>
+      
+      <div class="progress-track">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Dot Nav -->
+    <div class="dot-navigation" id="dot-navigation">
+      <button class="nav-dot active" data-index="0" aria-label="Section 1"></button>
+      <button class="nav-dot" data-index="1" aria-label="Section 2"></button>
+      <button class="nav-dot" data-index="2" aria-label="Section 3"></button>
+      <button class="nav-dot" data-index="3" aria-label="Section 4"></button>
+    </div>
+
+    <div class="keyboard-hint">Use Keyboard Arrows &larr; &rarr;</div>
+  </footer>
+
+  <!-- SHOPPING CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+    <div class="cart-header">
+      <h3 class="cart-title" id="cart-title">Ritual Cart</h3>
+      <button class="close-cart" id="close-cart" aria-label="Close Cart">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Scrollable Items Area -->
+    <div class="cart-items-container" id="cart-items-container">
+      <!-- Loaded dynamically via JS -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="total-label">Subtotal</span>
+        <span class="total-amount" id="cart-total-amount">$0.00</span>
+      </div>
+      
+      <button class="btn-primary checkout-btn-content" id="checkout-btn" style="width: 100%;">
+        <span class="btn-text">Proceed to Checkout</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- SKIN DIAGNOSTIC QUIZ MODAL -->
+  <div class="modal-overlay" id="quiz-modal">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="close-quiz" aria-label="Close Quiz">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="modal-body-container" id="quiz-card-content">
+        <!-- Dynamically rendered via quiz.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATION & USER DASHBOARD MODAL -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-card" style="max-width: 600px;" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="close-auth" aria-label="Close Account Panel">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="modal-body-container" id="auth-card-content">
+        <!-- Dynamically rendered via app.js depending on login state -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS MODAL -->
+  <div class="modal-overlay" id="order-success-modal">
+    <div class="modal-card" style="max-width: 500px;" role="dialog" aria-modal="true">
+      <div class="modal-body-container">
+        <div class="order-success-body">
+          <div class="success-icon-wrapper">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <span class="order-success-id" id="success-order-id">ORD_8F9D7C</span>
+          <h3 class="order-success-title">Ritual Placed</h3>
+          <p class="order-success-desc">Your order is being hand-packaged in our local sustainable boxes. A summary has been added to your OnSpace profile history.</p>
+          
+          <div class="order-success-details">
+            <div class="order-detail-row">
+              <span class="order-detail-label">Shipped To:</span>
+              <span class="order-detail-val" id="success-shipping-name">Eleanor Vance</span>
+            </div>
+            <div class="order-detail-row">
+              <span class="order-detail-label">Ritual Cost:</span>
+              <span class="order-detail-val" id="success-order-total">$88.00</span>
+            </div>
+            <div class="order-detail-row">
+              <span class="order-detail-label">Status:</span>
+              <span class="order-detail-val highlight-gold" id="success-order-status">Processing</span>
+            </div>
+          </div>
+
+          <div class="order-success-actions">
+            <button class="btn-primary" onclick="window.App.closeOrderSuccess()">Return to Ritual</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE SCRIPTS AND MODULES -->
+  <script src="onspace-backend.js"></script>
+  <script src="cart.js"></script>
+  <script src="quiz.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
