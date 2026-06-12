@@ -85,14 +85,56 @@ class SkincareApp {
       playPauseBtn.addEventListener('click', () => this.togglePlayPause());
     }
 
-    // Keyboard navigation
+    // Keyboard navigation (Arrow Left/Right + Up/Down)
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === 'Right') {
+      if (e.key === 'ArrowRight' || e.key === 'Right' || e.key === 'ArrowDown' || e.key === 'Down') {
         this.nextSection();
-      } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+      } else if (e.key === 'ArrowLeft' || e.key === 'Left' || e.key === 'ArrowUp' || e.key === 'Up') {
         this.prevSection();
       }
     });
+
+    // Mouse wheel / trackpad scroll navigation
+    window.addEventListener('wheel', (e) => {
+      // Suppress if any modal/drawer is open
+      if (this._isOverlayOpen()) return;
+      // Suppress during transition
+      if (this.isTransitioning) return;
+
+      e.preventDefault();
+
+      if (e.deltaY > 0) {
+        this.nextSection();
+      } else if (e.deltaY < 0) {
+        this.prevSection();
+      }
+    }, { passive: false });
+
+    // Touch swipe navigation (mobile / touchpad)
+    let _touchStartY = 0;
+    let _touchStartX = 0;
+
+    window.addEventListener('touchstart', (e) => {
+      _touchStartY = e.touches[0].clientY;
+      _touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      if (this._isOverlayOpen()) return;
+      if (this.isTransitioning) return;
+
+      const deltaY = _touchStartY - e.changedTouches[0].clientY;
+      const deltaX = _touchStartX - e.changedTouches[0].clientX;
+
+      // Only act on predominantly vertical swipes
+      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 40) {
+        if (deltaY > 0) {
+          this.nextSection();
+        } else {
+          this.prevSection();
+        }
+      }
+    }, { passive: true });
 
     // Ingredient Hotspots
     const hotspots = document.querySelectorAll('.ingredient-hotspot');
@@ -181,6 +223,19 @@ class SkincareApp {
     }, 1200);
   }
 
+  // --- OVERLAY DETECTION (suppress scroll nav when modal/drawer is open) ---
+  _isOverlayOpen() {
+    const authModal    = document.getElementById('auth-modal');
+    const cartDrawer   = document.getElementById('cart-drawer');
+    const successModal = document.getElementById('order-success-modal');
+    const quizModal    = document.getElementById('quiz-modal');
+
+    return (authModal    && authModal.classList.contains('active'))    ||
+           (cartDrawer   && cartDrawer.classList.contains('active'))   ||
+           (successModal && successModal.classList.contains('active')) ||
+           (quizModal    && quizModal.classList.contains('active'));
+  }
+
   nextSection() {
     const nextIdx = (this.currentSectionIndex + 1) % this.totalSections;
     this.navigateToSection(nextIdx);
@@ -246,7 +301,9 @@ class SkincareApp {
               <div class="product-card-image-box">
                 <img src="${prod.image}" alt="${prod.name}" class="product-card-img">
                 <div class="badge-overlay">
-                  ${prod.badges.map(b => `<span class="badge">${b}</span>`).join('')}
+                  ${prod.badges.slice(0, -1).map(b => `<span class="badge">${b}</span>`).join('')}
+                  <span class="badge-break"></span>
+                  ${prod.badges.slice(-1).map(b => `<span class="badge">${b}</span>`).join('')}
                 </div>
               </div>
               
@@ -262,7 +319,6 @@ class SkincareApp {
             </div>
 
             <div class="product-card-bottom">
-              <span class="product-price">$${prod.price.toFixed(2)}</span>
               <button class="btn-card-add" onclick="window.App.addProductToCart('${prod.id}')">
                 Add to Cart
               </button>
