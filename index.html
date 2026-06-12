@@ -167,37 +167,60 @@
           <h2 class="section-title-white">The Aura Community</h2>
         </div>
 
-        <div class="testimonials-layout">
+        <!-- Transition Style Switcher -->
+        <div class="animation-selector-panel">
+          <span class="selector-label">Ritual Motion:</span>
+          <div class="selector-buttons">
+            <button class="btn-anim-select active" data-var="classic" aria-label="Classic Entrance">Classic</button>
+            <button class="btn-anim-select" data-var="vertical" aria-label="Vertical Entrance">Vertical</button>
+            <button class="btn-anim-select" data-var="diagonal" aria-label="Diagonal Entrance">Diagonal</button>
+            <button class="btn-anim-select" data-var="cinematic" aria-label="Cinematic Entrance">Cinematic</button>
+          </div>
+        </div>
+
+        <div class="testimonials-layout var-classic" id="testimonials-layout">
           <!-- Testimonial 1 -->
           <div class="testimonial-card">
-            <div>
-              <div class="testimonial-stars" aria-label="5 stars">
-                &#9733; &#9733; &#9733; &#9733; &#9733;
-              </div>
-              <p class="testimonial-quote">"The Luminous Nectar is a revelation. My skin holds moisture like never before, giving a natural dew that lasts through twelve-hour days. It has simplified my entire morning."</p>
-            </div>
-            <div class="testimonial-author">
-              <div class="author-avatar">MC</div>
+            <div class="card-inner">
               <div>
-                <h4 class="author-name">Madeline Carlisle</h4>
-                <p class="author-meta">Verified Ritualist — Dry/Sensitive Skin</p>
+                <div class="testimonial-stars" aria-label="5 stars">
+                  &#9733; &#9733; &#9733; &#9733; &#9733;
+                </div>
+                <p class="testimonial-quote">
+                  <span class="anim-line">"The Luminous Nectar is a revelation.</span>
+                  <span class="anim-line">My skin holds moisture like never before, giving a natural dewy glow</span>
+                  <span class="anim-line">that lasts through twelve-hour days. It has simplified my ritual."</span>
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-avatar">MC</div>
+                <div>
+                  <h4 class="author-name">Madeline Carlisle</h4>
+                  <p class="author-meta">Verified Ritualist — Dry/Sensitive Skin</p>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Testimonial 2 (Secondary on large screen, hidden on mobile) -->
           <div class="testimonial-card secondary">
-            <div>
-              <div class="testimonial-stars" aria-label="5 stars">
-                &#9733; &#9733; &#9733; &#9733; &#9733;
-              </div>
-              <p class="testimonial-quote">"I was skeptical about facial oils, but the Auric Youth Elixir is lightweight, absorbing instantly without greasiness. My fine lines around the eyes have softened visibly in weeks."</p>
-            </div>
-            <div class="testimonial-author">
-              <div class="author-avatar">HR</div>
+            <div class="card-inner">
               <div>
-                <h4 class="author-name">Harrison Vance</h4>
-                <p class="author-meta">Verified Ritualist — Combination Skin</p>
+                <div class="testimonial-stars" aria-label="5 stars">
+                  &#9733; &#9733; &#9733; &#9733; &#9733;
+                </div>
+                <p class="testimonial-quote">
+                  <span class="anim-line">"I was skeptical about facial oils, but the Auric Youth Elixir</span>
+                  <span class="anim-line">is lightweight, absorbing instantly without any greasiness.</span>
+                  <span class="anim-line">My fine lines around the eyes have softened visibly in weeks."</span>
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="author-avatar">HR</div>
+                <div>
+                  <h4 class="author-name">Harrison Vance</h4>
+                  <p class="author-meta">Verified Ritualist — Combination Skin</p>
+                </div>
               </div>
             </div>
           </div>
@@ -336,9 +359,6 @@
   </div>
 
   <!-- CORE SCRIPTS AND MODULES -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="onspace-backend.js"></script>
   <script src="cart.js"></script>
   <script src="quiz.js"></script>
