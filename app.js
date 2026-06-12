@@ -118,45 +118,37 @@ class SkincareApp {
     }
   }
 
-  // --- TRANSITION ANIMATIONS (CURTAIN WIPE) ---
+  // --- TRANSITION ANIMATIONS (CINEMATIC FADE) ---
   navigateToSection(index) {
     if (index === this.currentSectionIndex || this.isTransitioning) return;
     if (index < 0 || index >= this.totalSections) return;
 
     this.isTransitioning = true;
-    const curtain = document.getElementById('curtain-wipe');
 
-    // Start curtain-wipe sweep
-    if (curtain) curtain.classList.add('animating');
+    // Deactivate current section
+    const activeSec = document.querySelector('.section.active');
+    if (activeSec) activeSec.classList.remove('active');
 
-    // Swap active section at exactly half-way point (curtain covering view)
+    // Activate target section
+    const targetSec = document.querySelector(`.section[data-index="${index}"]`);
+    if (targetSec) targetSec.classList.add('active');
+
+    // Update Navigation styling
+    const activeLink = document.querySelector('.nav-link.active');
+    if (activeLink) activeLink.classList.remove('active');
+    const targetLink = document.querySelector(`.nav-link[data-index="${index}"]`);
+    if (targetLink) targetLink.classList.add('active');
+
+    const activeDot = document.querySelector('.nav-dot.active');
+    if (activeDot) activeDot.classList.remove('active');
+    const targetDot = document.querySelector(`.nav-dot[data-index="${index}"]`);
+    if (targetDot) targetDot.classList.add('active');
+
+    this.currentSectionIndex = index;
+    this.resetSlideshowTimer(); // Start the timer fresh on the new slide
+
+    // Lock transitions for 1.2 seconds during the cross-fade animation
     setTimeout(() => {
-      // Deactivate current section
-      const activeSec = document.querySelector('.section.active');
-      if (activeSec) activeSec.classList.remove('active');
-
-      // Activate target section
-      const targetSec = document.querySelector(`.section[data-index="${index}"]`);
-      if (targetSec) targetSec.classList.add('active');
-
-      // Update Navigation styling
-      const activeLink = document.querySelector('.nav-link.active');
-      if (activeLink) activeLink.classList.remove('active');
-      const targetLink = document.querySelector(`.nav-link[data-index="${index}"]`);
-      if (targetLink) targetLink.classList.add('active');
-
-      const activeDot = document.querySelector('.nav-dot.active');
-      if (activeDot) activeDot.classList.remove('active');
-      const targetDot = document.querySelector(`.nav-dot[data-index="${index}"]`);
-      if (targetDot) targetDot.classList.add('active');
-
-      this.currentSectionIndex = index;
-      this.resetSlideshowTimer(); // Start the timer fresh on the new slide
-    }, 600); // 600ms is halfway of the 1.2s keyframe duration
-
-    // Cleanup transition classes
-    setTimeout(() => {
-      if (curtain) curtain.classList.remove('animating');
       this.isTransitioning = false;
     }, 1200);
   }

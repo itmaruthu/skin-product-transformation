@@ -82,7 +82,8 @@ a {
   opacity: 0;
   visibility: hidden;
   z-index: 1;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 1.2s ease, transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: scale(1.05);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -93,6 +94,7 @@ a {
   opacity: 1;
   visibility: visible;
   z-index: 10;
+  transform: scale(1);
 }
 
 /* --- BACKGROUND IMAGES & ANIMATION --- */
@@ -148,38 +150,6 @@ a {
   z-index: 4;
   display: flex;
   flex-direction: column;
-}
-
-/* --- CURTAIN WIPE TRANSITION --- */
-.curtain-wipe {
-  position: fixed;
-  top: 0;
-  left: 100%;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--color-cream-light);
-  z-index: 9999;
-  border-left: 5px solid var(--color-gold);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-@keyframes curtain-sweep {
-  0% {
-    left: 100%;
-  }
-  45%, 55% {
-    left: 0;
-  }
-  100% {
-    left: -100%;
-  }
-}
-
-.curtain-wipe.animating {
-  animation: curtain-sweep var(--transition-wipe) forwards;
 }
 
 /* --- HEADER & NAVIGATION --- */
