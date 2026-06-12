@@ -1,7 +1,7 @@
 /**
  * Core Application Coordinator
  * 
- * Manages full-screen curtain-wipe transitions, auto-play slideshow timer,
+ * Manages full-screen cinematic scrolling using Lenis and GSAP ScrollTrigger,
  * interactive hotspots, account auth forms, and dynamic data binding.
  */
 
@@ -10,6 +10,8 @@ class SkincareApp {
     this.currentSectionIndex = 0;
     this.totalSections = 4;
     this.isTransitioning = false;
+    this.isProgrammaticScroll = false;
+    this.scrollAnimationsInitialized = false;
     
     // Slideshow settings
     this.isPlaying = false;
@@ -53,6 +55,48 @@ class SkincareApp {
     document.addEventListener('DOMContentLoaded', () => {
       this.bindDOMEvents();
       this.loadProducts();
+      
+      // Initialize Lenis smooth scroll
+      this.lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // premium soft acceleration/deceleration
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2
+      });
+
+      // Sync ScrollTrigger with Lenis
+      this.lenis.on('scroll', ScrollTrigger.update);
+
+      // Hook Lenis raf loop into GSAP ticker
+      gsap.ticker.add((time) => {
+        this.lenis.raf(time * 1000);
+      });
+
+      gsap.ticker.lagSmoothing(0);
+
+      // Pause auto-play when user scrolls manually
+      this.lenis.on('scroll', (e) => {
+        if (!this.isProgrammaticScroll && e.velocity !== 0) {
+          if (this.isPlaying) {
+            this.isPlaying = false;
+            // Update play/pause button icon visually
+            const pauseIcon = document.getElementById('pause-icon');
+            const playIcon = document.getElementById('play-icon');
+            const toggle = document.getElementById('play-pause-toggle');
+            if (pauseIcon) pauseIcon.style.display = 'none';
+            if (playIcon) playIcon.style.display = 'block';
+            if (toggle) {
+              toggle.setAttribute('aria-label', 'Play Auto Advance');
+            }
+          }
+          this.resetSlideshowTimer();
+        }
+      });
+
       this.startSlideshowTimer();
       this.checkUserSession();
     });
@@ -87,9 +131,12 @@ class SkincareApp {
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
+      // Prevent browser default arrow key scrolling to let Lenis handle it
       if (e.key === 'ArrowRight' || e.key === 'Right') {
+        e.preventDefault();
         this.nextSection();
       } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
+        e.preventDefault();
         this.prevSection();
       }
     });
@@ -118,39 +165,36 @@ class SkincareApp {
     }
   }
 
-  // --- TRANSITION ANIMATIONS (CINEMATIC FADE) ---
+  // --- TRANSITION ANIMATIONS (LENIS + GSAP SMOOTH SCROLL) ---
   navigateToSection(index) {
-    if (index === this.currentSectionIndex || this.isTransitioning) return;
-    if (index < 0 || index >= this.totalSections) return;
+    if (index < 0 || index >= this.totalSections || this.isTransitioning) return;
+    
+    const sections = gsap.utils.toArray(".section");
+    const targetSection = sections[index];
 
-    this.isTransitioning = true;
+    if (targetSection && this.lenis) {
+      this.isTransitioning = true;
+      const wasPlaying = this.isPlaying;
+      this.isPlaying = false;
+      this.resetSlideshowTimer();
+      
+      this.isProgrammaticScroll = true; // Set programmatic flag to ignore scroll callbacks
 
-    // Deactivate current section
-    const activeSec = document.querySelector('.section.active');
-    if (activeSec) activeSec.classList.remove('active');
-
-    // Activate target section
-    const targetSec = document.querySelector(`.section[data-index="${index}"]`);
-    if (targetSec) targetSec.classList.add('active');
-
-    // Update Navigation styling
-    const activeLink = document.querySelector('.nav-link.active');
-    if (activeLink) activeLink.classList.remove('active');
-    const targetLink = document.querySelector(`.nav-link[data-index="${index}"]`);
-    if (targetLink) targetLink.classList.add('active');
-
-    const activeDot = document.querySelector('.nav-dot.active');
-    if (activeDot) activeDot.classList.remove('active');
-    const targetDot = document.querySelector(`.nav-dot[data-index="${index}"]`);
-    if (targetDot) targetDot.classList.add('active');
-
-    this.currentSectionIndex = index;
-    this.resetSlideshowTimer(); // Start the timer fresh on the new slide
-
-    // Lock transitions for 1.2 seconds during the cross-fade animation
-    setTimeout(() => {
-      this.isTransitioning = false;
-    }, 1200);
+      this.lenis.scrollTo(targetSection, {
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // match Lenis premium ease
+        onComplete: () => {
+          this.isPlaying = wasPlaying;
+          this.isProgrammaticScroll = false; // Clear programmatic flag
+          this.isTransitioning = false;
+          this.updateActiveIndicators(index);
+          
+          if (this.isPlaying) {
+            this.resetSlideshowTimer();
+          }
+        }
+      });
+    }
   }
 
   nextSection() {
@@ -161,6 +205,188 @@ class SkincareApp {
   prevSection() {
     const prevIdx = (this.currentSectionIndex - 1 + this.totalSections) % this.totalSections;
     this.navigateToSection(prevIdx);
+  }
+
+  // --- GSAP SCROLLTRIGGERS AND TEXT REVEALS ---
+  initScrollAnimations() {
+    if (this.scrollAnimationsInitialized) return;
+    this.scrollAnimationsInitialized = true;
+
+    // Register GSAP ScrollTrigger Plugin
+    gsap.registerPlugin(ScrollTrigger);
+
+    const sections = gsap.utils.toArray(".section");
+
+    // 1. Stack Stacking Pinning Transitions (Scene-to-scene layered scrolling)
+    sections.forEach((section, index) => {
+      // Entrance: Scroll next section up from bottom
+      if (index > 0) {
+        gsap.fromTo(section,
+          { yPercent: 100 },
+          {
+            yPercent: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "top top",
+              scrub: true,
+              id: `slide-${index}`
+            }
+          }
+        );
+      }
+
+      // Exit: Pin current section and scale/fade it down as next section enters on top
+      if (index < sections.length - 1) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "+=100%",
+          pin: true,
+          pinSpacing: false,
+          id: `pin-${index}`
+        });
+
+        const nextSection = sections[index + 1];
+        gsap.to(section, {
+          scale: 0.93,
+          opacity: 0.3,
+          ease: "none",
+          scrollTrigger: {
+            trigger: nextSection,
+            start: "top bottom",
+            end: "top top",
+            scrub: true
+          }
+        });
+      }
+    });
+
+    // 2. Background Parallax
+    sections.forEach((section) => {
+      const bgImage = section.querySelector('.bg-image');
+      if (bgImage) {
+        gsap.fromTo(bgImage,
+          { yPercent: -12, scale: 1.15 },
+          {
+            yPercent: 12,
+            scale: 1.02,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          }
+        );
+      }
+    });
+
+    // 3. Staggered Text and Content Reveal Animations
+    sections.forEach((section) => {
+      const content = section.querySelector('.section-content, .hero-box');
+      if (content) {
+        const title = content.querySelector('.hero-title, .section-title-white');
+        const subtitle = content.querySelector('.hero-subtitle, .section-subtitle');
+        
+        const targets = [];
+        if (subtitle) targets.push(subtitle);
+        if (title) targets.push(title);
+        
+        const mainLayout = content.querySelector('.products-slider-wrapper, .ingredients-layout, .testimonials-layout, .hero-desc');
+        if (mainLayout) {
+          if (mainLayout.classList.contains('products-slider-wrapper')) {
+            const cards = mainLayout.querySelectorAll('.product-card');
+            if (cards.length > 0) {
+              targets.push(...cards);
+            } else {
+              targets.push(mainLayout);
+            }
+          } else if (mainLayout.classList.contains('testimonials-layout')) {
+            const tcards = mainLayout.querySelectorAll('.testimonial-card');
+            if (tcards.length > 0) {
+              targets.push(...tcards);
+            } else {
+              targets.push(mainLayout);
+            }
+          } else {
+            targets.push(mainLayout);
+          }
+        }
+
+        const actions = content.querySelector('.hero-actions');
+        if (actions) targets.push(actions);
+
+        if (targets.length > 0) {
+          gsap.fromTo(targets,
+            {
+              opacity: 0,
+              y: 40,
+              filter: "blur(8px)"
+            },
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              stagger: 0.12,
+              duration: 1.2,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: section,
+                start: "top 45%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
+        }
+      }
+    });
+
+    // 4. Sync Navigation active state dots and links on Scroll
+    sections.forEach((section, index) => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 40%",
+        end: "bottom 40%",
+        onToggle: (self) => {
+          if (self.isActive && !this.isProgrammaticScroll) {
+            this.updateActiveIndicators(index);
+          }
+        }
+      });
+    });
+
+    // 5. Update overall progress bar in the bottom controls based on scroll
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: (self) => {
+        if (!this.isPlaying) {
+          const percent = self.progress * 100;
+          const barFill = document.getElementById('progress-bar-fill');
+          if (barFill) barFill.style.width = `${percent}%`;
+        }
+      }
+    });
+  }
+
+  updateActiveIndicators(index) {
+    this.currentSectionIndex = index;
+
+    // Header Links
+    const activeLink = document.querySelector('.nav-link.active');
+    if (activeLink) activeLink.classList.remove('active');
+    const targetLink = document.querySelector(`.nav-link[data-index="${index}"]`);
+    if (targetLink) targetLink.classList.add('active');
+
+    // Dot navigation
+    const activeDot = document.querySelector('.nav-dot.active');
+    if (activeDot) activeDot.classList.remove('active');
+    const targetDot = document.querySelector(`.nav-dot[data-index="${index}"]`);
+    if (targetDot) targetDot.classList.add('active');
   }
 
   // --- AUTO-PLAY SLIDESHOW TIMER ---
@@ -192,13 +418,17 @@ class SkincareApp {
     this.isPlaying = !this.isPlaying;
     const pauseIcon = document.getElementById('pause-icon');
     const playIcon = document.getElementById('play-icon');
+    const toggle = document.getElementById('play-pause-toggle');
 
     if (this.isPlaying) {
       if (pauseIcon) pauseIcon.style.display = 'block';
       if (playIcon) playIcon.style.display = 'none';
+      if (toggle) toggle.setAttribute('aria-label', 'Pause Auto Advance');
+      this.resetSlideshowTimer();
     } else {
       if (pauseIcon) pauseIcon.style.display = 'none';
       if (playIcon) playIcon.style.display = 'block';
+      if (toggle) toggle.setAttribute('aria-label', 'Play Auto Advance');
     }
   }
 
@@ -245,12 +475,17 @@ class SkincareApp {
 
       listContainer.innerHTML = html;
 
+      // Trigger scroll animations setup once the products are in the DOM
+      this.initScrollAnimations();
+
     } catch (err) {
       listContainer.innerHTML = `
         <div class="quiz-error" style="color: white; text-align: center; width: 100%; padding: 40px;">
           <p>Failed to load skincare catalog. Please reload.</p>
         </div>
       `;
+      // Run scroll animations even if product loading fails
+      this.initScrollAnimations();
     }
   }
 
