@@ -12,7 +12,7 @@ class SkincareApp {
     this.isTransitioning = false;
     
     // Slideshow settings
-    this.isPlaying = true;
+    this.isPlaying = false;
     this.slideshowDuration = 8000; // 8 seconds per section
     this.elapsedTime = 0;
     this.timerInterval = null;
