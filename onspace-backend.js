@@ -49,7 +49,7 @@ class OnSpaceBackendService {
         badges: ['Squalane 2%', 'Hyaluronic Acid', 'Hydrating'],
         description: 'A luxurious, ultra-lightweight nectar designed to flood the skin with multi-depth moisture, leaving a dewy, glass-like finish.',
         ingredients: 'Water, Squalane, Sodium Hyaluronate, Glycerin, Panthenol, Phenoxyethanol, Ethylhexylglycerin.',
-        image: 'images/hero-skincare.jpg', // Reusing hero image for premium feel
+        image: 'images/OIP-1030333186.jpg', 
         skinTypeMatch: ['dry', 'combination', 'sensitive']
       },
       {
@@ -63,7 +63,7 @@ class OnSpaceBackendService {
         badges: ['24k Gold Flakes', 'Rosehip Oil', 'Anti-Aging'],
         description: 'Infused with genuine 24-karat gold flakes and cold-pressed botanical oils, this elixir stimulates cellular renewal and restores youthful elasticity.',
         ingredients: 'Rosa Moschata (Rosehip) Seed Oil, Simmondsia Chinensis (Jojoba) Seed Oil, Gold (CI 77480), Tocopherol, Jasmine Essential Oil.',
-        image: 'images/products-bg.jpg',
+        image: 'images/OIP-2217239342.jpg',
         skinTypeMatch: ['dry', 'combination']
       },
       {
@@ -77,7 +77,7 @@ class OnSpaceBackendService {
         badges: ['Green Tea', 'Centella Asiatica', 'Soothing'],
         description: 'A velvety, non-foaming emulsion that effortlessly dissolves makeup, pollution, and excess sebum while preserving the skin\'s vital acid mantle.',
         ingredients: 'Camellia Sinensis (Green Tea) Leaf Extract, Centella Asiatica Extract, Aloe Barbadensis Leaf Juice, Coco-Glucoside, Cetearyl Alcohol.',
-        image: 'images/ingredients-bg.jpg',
+        image: 'images/OIP-3050139748.jpg',
         skinTypeMatch: ['oily', 'sensitive', 'combination']
       },
       {
@@ -91,7 +91,7 @@ class OnSpaceBackendService {
         badges: ['3x Ceramides', 'Colloidal Oat 1%', 'Barrier Repair'],
         description: 'A cocooning lipid-replenishing cream that seals micro-tears in the stratum corneum, instantly calming redness and extreme dryness.',
         ingredients: 'Ceramide NP, Ceramide AP, Ceramide EOP, Colloidal Oatmeal, Shea Butter, Squalane, Phytosphingosine.',
-        image: 'images/testimonial-bg.jpg',
+        image: 'images/pngtree-skin-care-products-beauty-splash-green-background-picture-image_2491905-1471984412.png',
         skinTypeMatch: ['dry', 'sensitive']
       }
     ];
