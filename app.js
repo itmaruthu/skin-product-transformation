@@ -328,23 +328,28 @@ class SkincareApp {
                   <span class="badge-break"></span>
                   ${prod.badges.slice(-1).map(b => `<span class="badge">${b}</span>`).join('')}
                 </div>
+                <div class="product-hover-overlay"></div>
               </div>
-              
               <div class="product-info">
                 <p class="product-volume">${prod.volume}</p>
                 <h3 class="product-name">${prod.name}</h3>
                 <p class="product-tagline">${prod.tagline}</p>
-                <div class="product-rating">
-                  <span>&#9733; ${prod.rating.toFixed(1)}</span>
-                  <span class="rating-count">(${prod.reviewsCount})</span>
+                <div class="product-rating-row">
+                  <div class="product-rating">
+                    <span>&#9733; ${prod.rating.toFixed(1)}</span>
+                    <span class="rating-count">(${prod.reviewsCount})</span>
+                  </div>
+                  <div class="rating-divider"></div>
+                  <button class="btn-card-add" onclick="window.App.addProductToCart('${prod.id}')">
+                    <svg class="cart-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
-            </div>
-
-            <div class="product-card-bottom">
-              <button class="btn-card-add" onclick="window.App.addProductToCart('${prod.id}')">
-                Add to Cart
-              </button>
             </div>
           </div>
         `;
