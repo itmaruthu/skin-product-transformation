@@ -146,7 +146,7 @@ a {
   max-width: 1400px;
   height: 100%;
   margin: 0 auto;
-  padding: 120px 40px 80px 40px;
+  padding: clamp(80px, 9vh, 105px) 40px clamp(55px, 6vh, 75px) 40px;
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -158,8 +158,8 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  height: 90px;
-  padding: 0 60px;
+  height: 75px;
+  padding: 0 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -171,7 +171,7 @@ a {
 
 .brand-logo {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 300;
   letter-spacing: 0.15em;
   color: var(--color-white);
@@ -185,7 +185,7 @@ a {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 28px;
 }
 
 .nav-link {
@@ -396,7 +396,7 @@ a {
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -413,11 +413,11 @@ a {
 
 /* Title split into two animatable lines */
 .hero-title {
-  font-size: 5rem;
+  font-size: clamp(3rem, 4.2vw, 4.2rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.15;
   color: var(--color-charcoal);
-  margin-bottom: 25px;
+  margin-bottom: 18px;
   text-shadow: none;
   overflow: visible;
 }
@@ -436,7 +436,7 @@ a {
   font-size: 0.95rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 35px;
+  margin-bottom: 22px;
   font-weight: 300;
 }
 
@@ -494,7 +494,7 @@ a {
 }
 
 .section-header {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .section-subtitle {
@@ -503,18 +503,18 @@ a {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-gold);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: block;
 }
 
 .section-title-white {
-  font-size: 2.2rem;
+  font-size: 1.95rem;
   color: var(--color-white);
 }
 
 .products-slider-wrapper {
   display: flex;
-  gap: 30px;
+  gap: 24px;
   width: 100%;
   overflow-x: auto;
   padding-bottom: 20px;
@@ -527,7 +527,7 @@ a {
 }
 
 .product-card {
-  flex: 0 0 calc(25% - 22.5px);
+  flex: 0 0 calc(25% - 18px);
   min-width: 280px;
   /* Rich dark gold-tinted glass — Auric style */
   background: linear-gradient(
@@ -626,7 +626,7 @@ a {
 
 .product-card-image-box {
   width: 100%;
-  height: 190px;
+  height: 165px;
   border-radius: 14px 14px 0 0;
   overflow: hidden;
   background-color: rgba(30, 20, 5, 0.6);
@@ -716,7 +716,7 @@ a {
 
 .product-info {
   margin-top: 0;
-  padding: 16px 20px 20px 20px;
+  padding: 12px 18px 18px 18px;
   position: relative;
   z-index: 2;
   display: flex;
@@ -725,24 +725,24 @@ a {
 }
 
 .product-volume {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.05em;
   margin-bottom: 4px;
 }
 
 .product-name {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   color: var(--color-white);
   margin-bottom: 4px;
   line-height: 1.2;
 }
 
 .product-tagline {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.35;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-weight: 300;
 }
 
@@ -752,7 +752,7 @@ a {
   align-items: center;
   margin-top: auto;
   padding-top: 10px;
-  min-height: 32px;
+  min-height: 28px;
 }
 
 .product-rating {
@@ -873,15 +873,15 @@ a {
 /* --- BOTANICALS & INGREDIENTS --- */
 .ingredients-layout {
   display: flex;
-  gap: 50px;
-  height: calc(100% - 100px);
+  gap: 40px;
+  height: calc(100% - 70px);
   align-items: center;
 }
 
 .ingredients-interactive-map {
   flex: 1;
   height: 100%;
-  max-height: 500px;
+  max-height: 440px;
   position: relative;
   background-color: rgba(28, 28, 28, 0.3);
   border-radius: 12px;
@@ -966,14 +966,14 @@ a {
 }
 
 .ingredients-details-panel {
-  flex: 0 0 450px;
+  flex: 0 0 390px;
   background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 40px;
+  padding: 28px;
   color: var(--color-white);
-  min-height: 380px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1037,17 +1037,17 @@ a {
 }
 
 .ing-details-title {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: var(--color-white);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   line-height: 1.2;
 }
 
 .ing-details-desc {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 25px;
+  margin-bottom: 18px;
   font-weight: 300;
 }
 
@@ -1061,7 +1061,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.9);
 }
 
@@ -1073,7 +1073,7 @@ a {
 /* --- TESTIMONIALS --- */
 .testimonials-layout {
   display: flex;
-  gap: 40px;
+  gap: 24px;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -1083,14 +1083,14 @@ a {
 
 /* Base Card Styling */
 .testimonial-card {
-  flex: 0 0 420px;
+  flex: 0 0 385px;
   background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 30px;
+  padding: 24px;
   color: var(--color-white);
-  min-height: 270px;
+  min-height: 230px;
   opacity: 0;
   visibility: hidden;
   transition: 
@@ -1209,10 +1209,10 @@ a {
 /* Line-by-line Quote Text Reveal (Blur-to-Clear) */
 .testimonial-quote {
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   line-height: 1.5;
   font-style: italic;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   font-weight: 300;
   display: flex;
   flex-direction: column;
@@ -1249,8 +1249,8 @@ a {
 
 /* Avatar scale + fade */
 .author-avatar {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: 1px solid var(--color-gold);
   background-color: var(--color-cream-dark);
@@ -1284,14 +1284,14 @@ a {
 #testimonials-section.active .testimonial-card:nth-child(2) .author-meta { opacity: 1; transform: translateY(0); transition-delay: 1.3s; }
 
 .author-name {
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--color-white);
 }
 
 .author-meta {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.5);
   margin-top: 2px;
 }
@@ -1330,8 +1330,8 @@ a {
 /* --- ANIMATION STYLE SWITCHER PANEL --- */
 .animation-selector-panel {
   position: absolute;
-  top: 120px;
-  right: 40px;
+  top: 100px;
+  right: 30px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -1382,8 +1382,8 @@ a {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
-  padding: 0 60px;
+  height: 65px;
+  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2323,16 +2323,17 @@ a {
 /* ----------- LARGE DESKTOPS (1200px) ----------- */
 @media (max-width: 1200px) {
   .product-card {
-    flex: 0 0 calc(33.333% - 20px);
+    flex: 0 0 calc(33.333% - 16px);
   }
 
   .ingredients-details-panel {
-    flex: 0 0 380px;
-    padding: 30px;
+    flex: 0 0 370px;
+    padding: 24px;
   }
 
   .testimonial-card {
-    flex: 0 0 380px;
+    flex: 0 0 370px;
+    padding: 20px;
   }
 }
 
