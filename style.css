@@ -2234,78 +2234,839 @@ a {
   transform: translateY(0);
 }
 
-/* --- RESPONSIVE ADJUSTMENTS --- */
+/* === HAMBURGER MENU (hidden on desktop) === */
+.hamburger-toggle {
+  display: none; /* Shown only on mobile via media query */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 6px;
+  z-index: 1001;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-white);
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+.hamburger-toggle.active .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-toggle.active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-toggle.active .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============================================= */
+/* === RESPONSIVE ADJUSTMENTS                === */
+/* ============================================= */
+
+/* ----------- LARGE DESKTOPS (1200px) ----------- */
 @media (max-width: 1200px) {
   .product-card {
     flex: 0 0 calc(33.333% - 20px);
   }
+
+  .ingredients-details-panel {
+    flex: 0 0 380px;
+    padding: 30px;
+  }
+
+  .testimonial-card {
+    flex: 0 0 380px;
+  }
 }
 
-@media (max-width: 900px) {
-  .product-card {
-    flex: 0 0 calc(50% - 15px);
+/* ----------- TABLETS & SMALL LAPTOPS (max 768px) ----------- */
+@media (max-width: 768px) {
+  /* --- HEADER / NAV --- */
+  .global-header {
+    padding: 0 20px;
+    height: 70px;
   }
-  
+
+  .brand-logo {
+    font-size: 1.5rem;
+  }
+
+  .hamburger-toggle {
+    display: flex;
+    order: 3;
+  }
+
+  .nav-links {
+    /* Full-screen mobile drawer */
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(28, 28, 28, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease, visibility 0.4s ease, transform 0.4s ease;
+  }
+
+  .nav-links.mobile-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    padding: 12px 0;
+  }
+
+  .header-actions {
+    gap: 16px;
+  }
+
+  .header-actions .btn-secondary {
+    display: none; /* Hide "Skin Diagnostic" text button on mobile to save space */
+  }
+
+  .header-btn {
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* --- SECTION CONTENT SHARED --- */
+  .section-content {
+    padding: 90px 24px 70px 24px;
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+  }
+
+  .section-title-white {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+  }
+
+  .section-subtitle {
+    font-size: 0.7rem;
+  }
+
+  /* --- HERO --- */
+  .hero-box {
+    max-width: 100%;
+    padding-left: 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    margin-bottom: 18px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .hero-subtitle::before {
+    width: 20px;
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+    margin-bottom: 28px;
+  }
+
+  .hero-desc br {
+    display: none; /* Let text flow naturally on mobile */
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .hero-actions .btn-primary {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 0.7rem;
+    min-height: 48px;
+  }
+
+  /* --- SECTION OVERFLOW CLIP --- */
+  .section-content {
+    overflow: hidden;
+  }
+
+  /* --- PRODUCTS --- */
+  .products-slider-wrapper {
+    gap: 16px;
+    padding-bottom: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .product-card {
+    flex: 0 0 260px;
+    min-width: 240px;
+  }
+
+  .product-card-image-box {
+    height: 160px;
+  }
+
+  .product-info {
+    padding: 12px 16px 4px 16px;
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-tagline {
+    font-size: 0.7rem;
+  }
+
+  .product-card-bottom {
+    padding: 10px 16px 0 16px;
+  }
+
+  .product-card-bottom .btn-card-add {
+    padding: 12px 0;
+    font-size: 0.65rem;
+    min-height: 44px;
+  }
+
+  .price-tag {
+    font-size: 0.8rem;
+    padding: 4px 9px;
+  }
+
+  .badge {
+    font-size: 0.55rem;
+    padding: 3px 6px;
+  }
+
+  /* --- INGREDIENTS / BOTANICALS --- */
   .ingredients-layout {
     flex-direction: column;
     align-items: stretch;
+    gap: 20px;
+    height: auto;
   }
-  
+
   .ingredients-interactive-map {
-    height: 300px;
+    flex: 0 0 auto;
+    height: 220px;
+    max-height: 250px;
   }
-  
+
   .ingredients-details-panel {
-    flex: 1;
-    min-height: 250px;
+    flex: 1 1 auto;
+    min-height: auto;
+    padding: 24px;
   }
-  
+
+  .ing-details-title {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+
+  .ing-details-desc {
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+  }
+
+  .benefit-item {
+    font-size: 0.8rem;
+  }
+
+  /* Ingredients panel should not shift up on hover on touch devices */
+  .ingredients-details-panel:hover {
+    transform: none !important;
+  }
+
+  /* --- TESTIMONIALS --- */
   .testimonials-layout {
     flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
   }
-  
+
   .testimonial-card {
-    flex: 1;
+    flex: 1 1 auto;
     width: 100%;
-    min-height: 280px;
+    min-height: auto;
+    padding: 24px;
   }
-  
+
   .testimonial-card.secondary {
-    display: none; /* Hide offscreen reviews on mobile */
+    display: none;
   }
-  
+
+  .testimonial-quote {
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .testimonial-card:hover {
+    transform: none !important;
+  }
+
+  /* Animation selector */
+  .animation-selector-panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    justify-content: flex-start;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .selector-label {
+    font-size: 0.6rem;
+    width: 100%;
+  }
+
+  .btn-anim-select {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
+
+  /* --- BOTTOM CONTROLS BAR --- */
+  .bottom-controls-bar {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .slideshow-progress-container {
+    max-width: 200px;
+  }
+
+  .keyboard-hint {
+    display: none;
+  }
+
+  .dot-navigation {
+    gap: 12px;
+  }
+
+  .nav-dot {
+    width: 10px;
+    height: 10px;
+    min-width: 44px; /* Touch target */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    position: relative;
+  }
+
+  .nav-dot::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.35);
+    transition: var(--transition-smooth);
+    position: absolute;
+  }
+
+  .nav-dot.active::before {
+    background-color: var(--color-gold);
+    transform: scale(1.4);
+    box-shadow: 0 0 8px var(--color-gold);
+  }
+
+  /* Override default dot styles inside touch wrapper */
+  .nav-dot {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* --- CART DRAWER --- */
   .cart-drawer {
     width: 100%;
     right: -100%;
   }
-}
 
-@media (max-width: 600px) {
-  .global-header {
-    padding: 0 20px;
+  .cart-header {
+    padding: 20px;
   }
-  
-  .nav-links {
-    display: none; /* Mobile menu collapsed for clean experience */
+
+  .cart-items-container {
+    padding: 16px 20px;
   }
-  
-  .product-card {
-    flex: 0 0 100%;
+
+  .cart-footer {
+    padding: 20px;
   }
-  
-  .hero-title {
-    font-size: 2.5rem;
+
+  .cart-title {
+    font-size: 1.3rem;
   }
-  
+
+  /* --- MODALS (Quiz, Auth, Order Success) --- */
+  .modal-overlay {
+    padding: 12px;
+    align-items: flex-end; /* Slide up from bottom on mobile */
+  }
+
+  .modal-card {
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 16px 16px 0 0;
+  }
+
   .modal-body-container {
-    padding: 25px;
+    padding: 30px 24px;
+    min-height: auto;
   }
-  
+
+  .modal-close-btn {
+    top: 18px;
+    right: 18px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quiz-question-title {
+    font-size: 1.4rem;
+    margin-bottom: 18px;
+  }
+
+  .quiz-option-btn {
+    padding: 14px 18px;
+    gap: 14px;
+    min-height: 52px;
+  }
+
+  .option-text {
+    font-size: 0.8rem;
+  }
+
+  .results-title {
+    font-size: 1.5rem;
+  }
+
   .recommendations-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
-  
-  .bottom-controls-bar {
-    padding: 0 20px;
+
+  .results-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .results-footer .btn-primary,
+  .results-footer .btn-secondary {
+    width: 100%;
+    text-align: center;
+    min-height: 48px;
+  }
+
+  /* --- AUTH MODAL --- */
+  .auth-tabs {
+    margin-bottom: 20px;
+  }
+
+  .auth-tab-btn {
+    font-size: 0.75rem;
+    padding: 12px;
+  }
+
+  .form-group input {
+    padding: 14px 16px;
+    font-size: 0.9rem;
+    min-height: 48px;
+  }
+
+  /* --- DASHBOARD --- */
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+
+  .orders-table {
+    font-size: 0.7rem;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px 10px;
+    white-space: nowrap;
+  }
+
+  .order-items-summary {
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* --- ORDER SUCCESS --- */
+  .order-success-title {
+    font-size: 1.6rem;
+  }
+
+  .order-success-desc {
+    font-size: 0.8rem;
+    max-width: 100%;
+  }
+
+  .order-success-details {
+    max-width: 100%;
+  }
+
+  /* --- TOAST --- */
+  .cart-toast {
+    left: 20px;
+    right: 20px;
+    bottom: 80px;
+    font-size: 0.75rem;
+    text-align: center;
   }
 }
+
+/* ----------- SMALL MOBILE (max 480px) ----------- */
+@media (max-width: 480px) {
+  .global-header {
+    height: 60px;
+    padding: 0 16px;
+  }
+
+  .brand-logo {
+    font-size: 1.3rem;
+  }
+
+  .section-content {
+    padding: 80px 16px 65px 16px;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: clamp(1.8rem, 10vw, 2.8rem);
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+  }
+
+  .hero-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+
+  .hero-actions .btn-primary {
+    padding: 12px 16px;
+    font-size: 0.65rem;
+  }
+
+  /* Products */
+  .product-card {
+    flex: 0 0 220px;
+    min-width: 200px;
+  }
+
+  .product-card-image-box {
+    height: 140px;
+  }
+
+  .product-name {
+    font-size: 0.9rem;
+  }
+
+  /* Ingredients */
+  .ingredients-interactive-map {
+    height: 180px;
+  }
+
+  .ingredients-details-panel {
+    padding: 20px;
+  }
+
+  .ing-details-title {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .ing-details-desc {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .ing-details-subtitle {
+    font-size: 0.65rem;
+  }
+
+  /* Hotspot touch targets — bigger for fingers */
+  .ingredient-hotspot {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hotspot-ring {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hotspot-ring::after {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Testimonials */
+  .testimonial-card {
+    padding: 20px;
+  }
+
+  .testimonial-quote {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .testimonial-stars {
+    margin-bottom: 8px;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 0.8rem;
+  }
+
+  .author-name {
+    font-size: 0.8rem;
+  }
+
+  .author-meta {
+    font-size: 0.65rem;
+  }
+
+  /* Animation selector */
+  .selector-buttons {
+    padding: 3px;
+  }
+
+  .btn-anim-select {
+    font-size: 0.55rem;
+    padding: 5px 8px;
+  }
+
+  /* Bottom bar */
+  .bottom-controls-bar {
+    height: 55px;
+    padding: 0 16px;
+  }
+
+  .play-pause-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .slideshow-progress-container {
+    max-width: 140px;
+  }
+
+  /* Modals */
+  .modal-body-container {
+    padding: 24px 18px;
+  }
+
+  .quiz-question-title {
+    font-size: 1.2rem;
+  }
+
+  .quiz-option-btn {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .option-index {
+    font-size: 0.95rem;
+    width: 20px;
+  }
+
+  .option-text {
+    font-size: 0.75rem;
+  }
+
+  .results-title {
+    font-size: 1.3rem;
+  }
+
+  .results-description {
+    font-size: 0.8rem;
+  }
+
+  .rec-card {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .rec-card-image-container {
+    width: 60px;
+    height: 60px;
+  }
+
+  .rec-card-name {
+    font-size: 0.8rem;
+  }
+
+  /* Cart */
+  .cart-header {
+    padding: 16px;
+  }
+
+  .cart-items-container {
+    padding: 12px 16px;
+    gap: 14px;
+  }
+
+  .cart-footer {
+    padding: 16px;
+  }
+
+  .cart-item-image-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .cart-item-name {
+    font-size: 0.85rem;
+  }
+
+  .total-amount {
+    font-size: 1.3rem;
+  }
+
+  /* Auth */
+  .dashboard-title {
+    font-size: 1.3rem;
+  }
+
+  .orders-list-wrapper {
+    max-height: 180px;
+  }
+
+  /* Order Success */
+  .order-success-title {
+    font-size: 1.4rem;
+  }
+
+  .success-icon-wrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .order-detail-row {
+    font-size: 0.75rem;
+  }
+}
+
+/* ----------- VERY SMALL SCREENS (max 360px) ----------- */
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.65rem;
+  }
+
+  .hero-desc {
+    font-size: 0.75rem;
+  }
+
+  .section-title-white {
+    font-size: 1.25rem;
+  }
+
+  .product-card {
+    flex: 0 0 200px;
+    min-width: 190px;
+  }
+
+  .product-card-image-box {
+    height: 120px;
+  }
+
+  .ingredients-interactive-map {
+    height: 160px;
+  }
+
+  .ing-details-title {
+    font-size: 1.15rem;
+  }
+
+  .testimonial-quote {
+    font-size: 0.85rem;
+  }
+
+  .quiz-question-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* === PREVENT HORIZONTAL OVERFLOW ON MOBILE === */
+@media (max-width: 768px) {
+  html {
+    overflow-x: hidden;
+  }
+
+  .app-viewport,
+  .section {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+/* === PERFORMANCE: Reduce animations on mobile for smoother UX === */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

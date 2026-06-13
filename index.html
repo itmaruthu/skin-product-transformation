@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Cinematic Skincare Experience. Discover luxurious, botanically-infused formulations tailored to your unique skin type.">
+  <meta name="description"
+    content="Cinematic Skincare Experience. Discover luxurious, botanically-infused formulations tailored to your unique skin type.">
   <title>AURA — Cinematic Skincare Ritual</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 
@@ -14,8 +17,15 @@
   <!-- FLOATING HEADER / NAVIGATION -->
   <header class="global-header">
     <a href="#" class="brand-logo" id="header-logo">Aura<span>.</span></a>
-    
-    <nav class="nav-links">
+
+    <!-- Mobile Hamburger Toggle -->
+    <button class="hamburger-toggle" id="hamburger-toggle" aria-label="Toggle Navigation Menu">
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+
+    <nav class="nav-links" id="nav-links">
       <a href="#hero" class="nav-link active" data-index="0">Ritual</a>
       <a href="#products" class="nav-link" data-index="1">Formulations</a>
       <a href="#ingredients" class="nav-link" data-index="2">Botanicals</a>
@@ -23,17 +33,19 @@
     </nav>
 
     <div class="header-actions">
-      <button class="btn-secondary" id="quiz-toggle" style="color: var(--color-white); border-color: rgba(255, 255, 255, 0.3); padding: 8px 16px; font-size: 0.65rem;">
+      <button class="btn-secondary" id="quiz-toggle"
+        style="color: var(--color-white); border-color: rgba(255, 255, 255, 0.3); padding: 8px 16px; font-size: 0.65rem;">
         Skin Diagnostic
       </button>
-      
+
       <!-- Account Dashboard Button -->
       <button class="header-btn" id="account-toggle" aria-label="User Account">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
           <circle cx="12" cy="7" r="4" />
         </svg>
-        <span id="account-status-dot" style="position: absolute; bottom: 0; right: 0; width: 6px; height: 6px; background-color: var(--color-gold); border-radius: 50%; display: none;"></span>
+        <span id="account-status-dot"
+          style="position: absolute; bottom: 0; right: 0; width: 6px; height: 6px; background-color: var(--color-gold); border-radius: 50%; display: none;"></span>
       </button>
 
       <!-- Cart Button -->
@@ -64,12 +76,14 @@
             <span class="hero-title-line-1">The Art of</span>
             <span class="hero-title-line-2"><em style="color: var(--color-gold);">Radiant</em> Skin</span>
           </h1>
-          <p class="hero-desc">Handcrafted from the world's rarest botanicals, our formulas<br>restore what nature intended — luminous, ageless skin.</p>
+          <p class="hero-desc">Handcrafted from the world's rarest botanicals, our formulas<br>restore what nature
+            intended — luminous, ageless skin.</p>
           <div class="hero-actions">
             <button class="btn-primary gold-btn" onclick="window.App.navigateToSection(1)">
               Discover Collection
             </button>
-            <button class="btn-primary" id="quiz-toggle-hero" style="background-color: transparent; border-color: rgba(255,255,255,0.45); color: var(--color-white);">
+            <button class="btn-primary" id="quiz-toggle-hero"
+              style="background-color: transparent; border-color: rgba(255,255,255,0.45); color: var(--color-white);">
               Begin Skin Analysis
             </button>
           </div>
@@ -88,7 +102,7 @@
           <span class="section-subtitle">Aesthetic Apothecary</span>
           <h2 class="section-title-white">The Essential Formulations</h2>
         </div>
-        
+
         <!-- Products Grid (Dynamically Populated) -->
         <div class="products-slider-wrapper" id="products-list">
           <div class="quiz-loading" style="min-height: 200px; width: 100%;">
@@ -115,7 +129,7 @@
           <!-- Interactive Map -->
           <div class="ingredients-interactive-map">
             <img src="images/ingredients-bg.jpg" alt="Botanical Ingredients" class="interactive-bg-img">
-            
+
             <!-- Hotspots -->
             <button class="ingredient-hotspot" id="hotspot-gold" data-id="gold" aria-label="24k Gold Flakes">
               <span class="hotspot-ring"></span>
@@ -137,7 +151,8 @@
               <!-- Dynamically populated via JS, showing a default initially -->
               <span class="ing-details-subtitle">Selected Ingredient</span>
               <h3 class="ing-details-title">Pure Bio-Active Compounds</h3>
-              <p class="ing-details-desc">Hover over or tap the glowing nodes on the botanical map to uncover the science, source, and cellular benefits behind our active skincare components.</p>
+              <p class="ing-details-desc">Hover over or tap the glowing nodes on the botanical map to uncover the
+                science, source, and cellular benefits behind our active skincare components.</p>
               <div class="ing-details-benefits">
                 <div class="benefit-item">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -237,16 +252,18 @@
     <div class="slideshow-progress-container">
       <button class="play-pause-btn" id="play-pause-toggle" aria-label="Play Auto Advance">
         <!-- Pause Icon (hidden by default) -->
-        <svg id="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display: none;">
+        <svg id="pause-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5" style="display: none;">
           <rect x="6" y="4" width="4" height="16" />
           <rect x="14" y="4" width="4" height="16" />
         </svg>
         <!-- Play Icon -->
-        <svg id="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <svg id="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.5">
           <polygon points="5 3 19 12 5 21 5 3" />
         </svg>
       </button>
-      
+
       <div class="progress-track">
         <div class="progress-bar-fill" id="progress-bar-fill"></div>
       </div>
@@ -286,7 +303,7 @@
         <span class="total-label">Subtotal</span>
         <span class="total-amount" id="cart-total-amount">$0.00</span>
       </div>
-      
+
       <button class="btn-primary checkout-btn-content" id="checkout-btn" style="width: 100%;">
         <span class="btn-text">Proceed to Checkout</span>
         <span class="spinner"></span>
@@ -336,8 +353,9 @@
           </div>
           <span class="order-success-id" id="success-order-id">ORD_8F9D7C</span>
           <h3 class="order-success-title">Ritual Placed</h3>
-          <p class="order-success-desc">Your order is being hand-packaged in our local sustainable boxes. A summary has been added to your OnSpace profile history.</p>
-          
+          <p class="order-success-desc">Your order is being hand-packaged in our local sustainable boxes. A summary has
+            been added to your OnSpace profile history.</p>
+
           <div class="order-success-details">
             <div class="order-detail-row">
               <span class="order-detail-label">Shipped To:</span>
@@ -367,4 +385,5 @@
   <script src="quiz.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>

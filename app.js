@@ -94,20 +94,24 @@ class SkincareApp {
       }
     });
 
-    // Mouse wheel / trackpad scroll navigation
+    // Mouse wheel / trackpad scroll navigation (debounced)
+    let _wheelCooldown = false;
     window.addEventListener('wheel', (e) => {
       // Suppress if any modal/drawer is open
       if (this._isOverlayOpen()) return;
-      // Suppress during transition
-      if (this.isTransitioning) return;
+      // Suppress during transition or cooldown
+      if (this.isTransitioning || _wheelCooldown) return;
 
       e.preventDefault();
+      _wheelCooldown = true;
 
       if (e.deltaY > 0) {
         this.nextSection();
       } else if (e.deltaY < 0) {
         this.prevSection();
       }
+
+      setTimeout(() => { _wheelCooldown = false; }, 600);
     }, { passive: false });
 
     // Touch swipe navigation (mobile / touchpad)
@@ -184,6 +188,25 @@ class SkincareApp {
     if (authOverlay) {
       authOverlay.addEventListener('click', (e) => {
         if (e.target === authOverlay) this.closeAuthModal();
+      });
+    }
+
+    // Hamburger Mobile Menu Toggle
+    const hamburgerBtn = document.getElementById('hamburger-toggle');
+    const navLinksEl = document.getElementById('nav-links');
+
+    if (hamburgerBtn && navLinksEl) {
+      hamburgerBtn.addEventListener('click', () => {
+        hamburgerBtn.classList.toggle('active');
+        navLinksEl.classList.toggle('mobile-open');
+      });
+
+      // Close mobile menu when a nav link is clicked
+      navLinksEl.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburgerBtn.classList.remove('active');
+          navLinksEl.classList.remove('mobile-open');
+        });
       });
     }
   }
